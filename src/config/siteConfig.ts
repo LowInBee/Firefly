@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "Developing",
 
 	// 站点 URL
-	site_url: "https://www.lowinbee.top",
+	site_url: "https://blog.lowinbee.top",
 
 	// 站点描述
 	description:
