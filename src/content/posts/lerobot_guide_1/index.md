@@ -1,7 +1,7 @@
 ---
 title: lerobot0.4教程
 published: 2026-07-15
-description: 
+description: 简短教程
 image: ./cover.png
 tags: [lerobot, manual]
 category: lerobot
