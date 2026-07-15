@@ -161,11 +161,6 @@ URL：`/posts/how-to-use-firefly-blog-theme`
   framespacing="0" allowfullscreen="true">
 </iframe>
 ```
-<iframe width="100%" height="468"
-  src="//player.bilibili.com/player.html?bvid=BV_ID&p=1&autoplay=0"
-  scrolling="no" border="0" frameborder="no"
-  framespacing="0" allowfullscreen="true">
-</iframe>****
 
 ## GitHub 仓库卡片 
 ```
