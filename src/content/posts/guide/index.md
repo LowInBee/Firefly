@@ -119,3 +119,56 @@ URL：`/posts/how-to-use-firefly-blog-theme`
 - Slug 一旦设置并发布，建议不要随意更改，以免影响 SEO 和已存在的链接
 - 如果多个文章使用相同的 slug，后面的文章会覆盖前面的
 - Slug 会自动转换为小写
+  
+## 提示框
+```
+> [!NOTE] 提示
+> 突出显示用户应该注意的信息。
+
+> [!TIP] 建议
+> 可选信息，帮助用户更成功。
+
+> [!IMPORTANT] 重要
+> 用户必须了解的关键信息。
+
+> [!WARNING] 警告
+> 需要立即注意的关键内容。
+
+> [!CAUTION] 注意
+> 行动的负面潜在后果。
+```
+> [!NOTE] 提示
+> 突出显示用户应该注意的信息。
+
+> [!TIP] 建议
+> 可选信息，帮助用户更成功。
+
+> [!IMPORTANT] 重要
+> 用户必须了解的关键信息。
+
+> [!WARNING] 警告
+> 需要立即注意的关键内容。
+
+> [!CAUTION] 注意
+> 行动的负面潜在后果。
+
+## bilibili视频
+
+```
+<iframe width="100%" height="468"
+  src="//player.bilibili.com/player.html?bvid=BV_ID&p=1&autoplay=0"
+  scrolling="no" border="0" frameborder="no"
+  framespacing="0" allowfullscreen="true">
+</iframe>
+```
+<iframe width="100%" height="468"
+  src="//player.bilibili.com/player.html?bvid=BV_ID&p=1&autoplay=0"
+  scrolling="no" border="0" frameborder="no"
+  framespacing="0" allowfullscreen="true">
+</iframe>****
+
+## GitHub 仓库卡片 
+```
+::github{repo="CuteLeaf/Firefly"}
+```
+::github{repo="CuteLeaf/Firefly"}
