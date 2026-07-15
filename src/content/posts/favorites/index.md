@@ -3,8 +3,8 @@ title: 网站收藏
 published: 2026-07-12
 description: 一些网站收藏
 image: ./cover.avif
-tags: [tools]
-category: tools
+tags: [favorites]
+category: favorites
 draft: false
 ---
 
