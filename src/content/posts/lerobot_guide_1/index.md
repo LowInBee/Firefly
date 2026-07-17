@@ -133,7 +133,7 @@ lerobot-record \
     --robot.type=so101_follower \
     --robot.port=/dev/ttyACM1 \
     --robot.id=myfollower01 \
-    --robot.cameras="{'wrist': {'type':'opencv', 'index_or_path':0, 'width':640, 'height':480, 'fps':60}, 'front': {'type':'opencv', 'index_or_path':2, 'width':640, 'height':480, 'fps':60}}" \
+    --robot.cameras="{'wrist': {'type':'opencv', 'index_or_path':0, 'width':640, 'height':480, 'fps':60}, 'front': {'type':'opencv', 'index_or_path':2, 'width':640, 'height':480, 'fps':30}}" \
     --teleop.type=so101_leader \
     --teleop.port=/dev/ttyACM0 \
     --teleop.id=myleader01 \
@@ -228,7 +228,7 @@ lerobot-rollout \
     --robot.type=so101_follower \
     --robot.port=/dev/ttyACM1 \
     --robot.id=myfollower01
-    --robot.cameras='{"wrist": {"type": "opencv", "index_or_path": 0, "width": 640, "height": 480, "fps": 60}, "front": {"type": "opencv", "index_or_path": 1, "width": 640, "height": 480, "fps": 30}}' \
+    --robot.cameras='{"wrist": {"type": "opencv", "index_or_path": 0, "width": 640, "height": 480, "fps": 60}, "front": {"type": "opencv", "index_or_path": 2, "width": 640, "height": 480, "fps": 30}}' \
     --task="catch the block into the box" \
     --duration=300 \
     --display_data=true \
@@ -243,7 +243,7 @@ lerobot-record  \
   --robot.type=so101_follower --robot.port=/dev/ttyACM1 --robot.id=myfollower01 \
   --teleop.type=so101_leader --teleop.port=/dev/ttyACM0 --teleop.id=myleader01 \
   --robot.disable_torque_on_disconnect=true \
-  --robot.cameras="{'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 480, 'fps': 60}, 'front': {'type': 'opencv', 'index_or_path': 1, 'width': 640, 'height': 480, 'fps': 30}}" \
+  --robot.cameras="{'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 480, 'fps': 60}, 'front': {'type': 'opencv', 'index_or_path': 2, 'width': 640, 'height': 480, 'fps': 30}}" \
   --display_data=true \
   --dataset.single_task="Put lego brick into the transparent box" \
   --policy.path=outputs/pretrained_model \
@@ -260,7 +260,7 @@ lerobot-rollout \
     --robot.type=so101_follower \
     --robot.id=myfollower01 \
     --robot.port=/dev/ttyACM1 \
-    --robot.cameras="{'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 480, 'fps': 60}, 'front': {'type': 'opencv', 'index_or_path': 1, 'width': 640, 'height': 480, 'fps': 30}}" \
+    --robot.cameras="{'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 480, 'fps': 60}, 'front': {'type': 'opencv', 'index_or_path': 2, 'width': 640, 'height': 480, 'fps': 30}}" \
     --task="catch the block into the box" \
     --inference.type=rtc \
     --inference.rtc.execution_horizon=10 \
