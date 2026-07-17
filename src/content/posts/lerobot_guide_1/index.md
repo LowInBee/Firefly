@@ -9,9 +9,11 @@ draft: false
 ---
 
 # 一 环境与硬件准备
-## 1 软件环境安装
-基于Ubuntu24.04，python3.10，lerobot0.4
-### 1.1 miniconda3创建虚拟环境
+## 1.1 软件环境安装
+基于Ubuntu24.04，
+1. python3.10，lerobot0.4
+2. python3.12，lerobot0.5
+### 1.1.1 miniconda3创建虚拟环境
 ```shell
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh
@@ -21,11 +23,14 @@ conda create -n lerobot python=3.10
 conda activate lerobot
 ```
 
-### 1.2 克隆代码库并安装相关包与舵机驱动
+### 1.1.2 克隆代码库并安装相关包与舵机驱动
 ```shell
 git clone https://github.com/JoyandAI/lerobot.git
 # 若已经有0.3版本 则输入以下更新仓库指令 
 git pull
+#下载好最新的仓库之后，切换到dev分支，0.5版本代码在这里
+git checkout dev
+git pull origin dev
 ```
 ```python
 cd lerobot
@@ -33,9 +38,9 @@ pip install -e ".[feetech]"
 conda install -c conda-forge ffmpeg=7.1.1
 ```
 
-## 2 机械臂位置手动标定
+## 1.2 机械臂位置手动标定
 
-### 2.1 确定编号
+### 1.2.1 确定编号
 ```shell
 lerobot-find-port
 ```
@@ -44,7 +49,7 @@ lerobot-find-port
 sudo chmod +666 /dev/ttyACM0 /dev/ttyACM1
 ```
 
-### 2.1 从臂：
+### 1.2.2 从臂：
 端口号需和上一步对应，设备名称自定
 ```shell
 lerobot-calibrate \
@@ -52,26 +57,27 @@ lerobot-calibrate \
     --robot.port=/dev/ttyACM1 \
     --robot.id=myfollower01
 ```
-将机械臂放在middle位后enter
-将每个关节放在最大和最小位置
+- 将机械臂放在middle位后enter
+- 将每个关节放在最大和最小位置
 回车保存于`~/.cache/huggingface/lerobot/calibration/robots/so101_follower/myfollower01.json`
+v0.5版本保存于`~/.cache/huggingface/lerobot/calibration/robots/so_follower/myfollower01.json`
 
-### 2.2 主臂：
+### 1.2.3 主臂：
 ```shell
 lerobot-calibrate \
     --teleop.type=so101_leader \
     --teleop.port=/dev/ttyACM0 \
     --teleop.id=myleader01
 ```
-将机械臂放在middle位后enter
-将每个关节放在最大和最小位置
+- 将机械臂放在middle位后enter
+- 将每个关节放在最大和最小位置
 
 > [!CAUTION] 注意
 > 若标定时出现某个关节为负值或者大于4095时，Ctrl+C 然后断开电源后再插上，重新标定即可。
 
-回车保存于`~/.cache/huggingface/lerobot/calibration/robots/so101_leader/myleader01.json`
-
-### 2.3 检查同步
+回车保存于`~/.cache/huggingface/lerobot/calibration/teleoperators/so101_leader/myleader01.json`
+v0.5版本保存于`~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/myleader01.json`
+### 1.2.4 检查同步
 ```shell
 lerobot-teleoperate \
     --robot.type=so101_follower \
@@ -84,8 +90,8 @@ lerobot-teleoperate \
 > [!WARNING] 警告
 > 检查第2、3、6号关节在 rest 位置时，是否处于与 Leader 臂同步的状态。如差异很大，可能 Leader 臂处于 rest 位时 follower 扭矩还很大，导致舵机发热、过热。
 
-## 3 相机配置
-### 3.1 查看相机编号
+## 1.3 相机配置
+### 1.3.1 查看相机编号
 ```shell
 lerobot-find-cameras
 ```
@@ -94,7 +100,7 @@ lerobot-find-cameras
 
 在`lerobot/output/captured_images`目录下，可以看到 2个获取的图像文件
 
-### 3.2 示教时显示相机画面
+### 1.3.2 示教时显示相机画面
 ```shell
 lerobot-teleoperate \
     ---robot.type=so101_follower \
@@ -106,7 +112,7 @@ lerobot-teleoperate \
     --teleop.id=myleader01
     --display_data=true
 ```
-### 3.3 本地录制
+### 1.3.3 本地录制
 地录制比较简单，不用获取Hugging face 的token。<br>
 先直接设置 HF_USER 变量，可以直接设置为你的用户名。
 ```shell
@@ -146,12 +152,12 @@ lerobot-record \
 
 # 二 模型训练
 
-### 1 基本流程
+## 2.1 基本流程
 1. 手动操作主臂完成目标动作（如抓取杯子）  
 2. 从臂通过摄像头同步记录动作轨迹  
 3. 建议先采集10组左右跑通整个流程，需要更好的效果再采集更多组（比如≥50）组动作序列。 
 
-## 2 训练配置
+## 2.2 训练配置
 - act, Action Chunking Transformers
 - diffusion, Diffusion Policy
 - tdmpc, TDMPC Policy
@@ -182,7 +188,7 @@ lerobot-train \
   --config_path=outputs/train/act_so101_test/checkpoints/last/pretrained_model/train_config.json \
   --resume=true
 ```
-### 2.1 SmolVLA训练
+## 2.3 SmolVLA训练
 先安装相关依赖包
 ```shell
 pip install -e ".[smolvla]"
@@ -204,9 +210,9 @@ lerobot-train \
 >如果报显存不足的错误，请减小batch_size。如果显存只有8GB，batch_size 最好设置在28以内。
 如果需要上传到huggingface，则选项 policy.push_to_hub 修改为 “--policy.push_to_hub=true”
 
-## 三 模型测试
-### 3.1 实时推理测试 
-#### 3.1.1 v0.5
+# 三 模型测试
+## 3.1 实时推理测试 
+### 3.1.1 v0.5
 v0.5.2版本下的代码，lerobot把推理与数据录制分离，之前record也用于推理，现在record为纯录制。
 现在用rollout来进行模型的推理。在rollout下有两种不同的推理方式，这里为了做简单的快速验证，我们先用最基本不带录制的推理命令。
 ```shell
@@ -223,7 +229,7 @@ lerobot-rollout \
     --interpolation_multiplier 2
 ```
 
-#### 3.1.2 v0.4
+### 3.3.2 v0.4
 > [!NOTE] 提示
 >这里仍然用的是 record.py，是推理的同时记录数据集，可能huggingface希望大家把数据集都上传到HF。但提供了 policy，确实是用指定策略模型推理
 ```shell
@@ -239,7 +245,7 @@ lerobot-record  \
   --dataset.repo_id=${HF_USER}/eval_so101 --dataset.push_to_hub=false
 ```
 
-### 3.2 RTC推理测试
+## 3.2 RTC推理测试
 RTC为内部多线程异步推理，仅限于smovla、pi0、pi0.5 实时推理性比较差的模型，解决了推理中机器需要停下来等待模型推理的问题，可以使得推理速度变快
 ```shell
 lerobot-rollout \
@@ -257,7 +263,7 @@ lerobot-rollout \
     --display_data=true \
     --dataset.push_to_hub=false
 ```
-### 3.3 Sentry持续录制
+## 3.3 Sentry持续录制
 长时间持续录制，不分episode，一口气录到底，事后处理数据集
 ```shell
 lerobot-rollout \
@@ -273,7 +279,7 @@ lerobot-rollout \
     --duration=3600
 ```
 
-### 3.4 推理时常见问题
+## 3.4 推理时常见问题
 - 调节 src\lerobot\robots\so101_follower\so101_follower.py 中 set_so100_robot_preset()函数中的 D_Coefficient 参数，改得小一点，比如0。
 - 检查舵机供电（7.4V从臂需2A以上电源，12V从臂需2A以上电源）  
 - 动作偏移：重新校准关节零点
