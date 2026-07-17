@@ -32,3 +32,63 @@ cd lerobot
 pip install -e ".[feetech]"
 conda install -c conda-forge ffmpeg=7.1.1
 ```
+
+## 2 机械臂位置手动标定
+
+### 2.1 确定编号
+```shell
+lerobot-find-port
+```
+拔出USB设备按enter，并给端口权限
+```shell
+sudo chmod +666 /dev/ttyACM0 /dev/ttyACM1
+```
+
+### 2.1 从臂：
+端口号需和上一步对应，设备名称自定
+```shell
+lerobot-calibrate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=myfollower01
+```
+将机械臂放在middle位后enter
+将每个关节放在最大和最小位置
+回车保存于`~/.cache/huggingface/lerobot/calibration/robots/so101_follower/myfollower01.json`
+
+### 2.2 主臂：
+```shell
+lerobot-calibrate \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=myleader01
+```
+将机械臂放在middle位后enter
+将每个关节放在最大和最小位置
+
+> [!CAUTION] 注意
+> 若标定时出现某个关节为负值或者大于4095时，Ctrl+C 然后断开电源后再插上，重新标定即可。
+
+回车保存于`~/.cache/huggingface/lerobot/calibration/robots/so101_leader/myleader01.json`
+
+### 2.3 检查
+```shell
+lerobot-teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=myfollower01
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=myleader01
+```
+> [!WARNING] 警告
+> 检查第2、3、6号关节在 rest 位置时，是否处于与 Leader 臂同步的状态。如差异很大，可能 Leader 臂处于 rest 位时 follower 扭矩还很大，导致舵机发热、过热。
+
+## 3 相机配置
+```shell
+lerobot-find-cameras
+```
+> [!NOTE] 提示
+> 插拔或电脑重启之后序列对应关系会发生变化
+
+在`lerobot/output/captured_images`目录下，可以看到 2个获取的图像文件
