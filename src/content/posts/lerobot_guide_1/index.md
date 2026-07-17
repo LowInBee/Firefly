@@ -88,7 +88,7 @@ v0.5版本保存于`~/.cache/huggingface/lerobot/calibration/teleoperators/so_le
 lerobot-teleoperate \
     --robot.type=so101_follower \
     --robot.port=/dev/ttyACM1 \
-    --robot.id=myfollower01
+    --robot.id=myfollower01 \
     --teleop.type=so101_leader \
     --teleop.port=/dev/ttyACM0 \
     --teleop.id=myleader01
@@ -109,13 +109,13 @@ lerobot-find-cameras
 ### 1.3.2 示教时显示相机画面
 ```shell
 lerobot-teleoperate \
-    ---robot.type=so101_follower \
+    --robot.type=so101_follower \
     --robot.port=/dev/ttyACM1 \
-    --robot.id=myfollower01
+    --robot.id=myfollower01 \
     --robot.cameras="{ 'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 360, 'fps': 30}}" \
     --teleop.type=so101_leader \
     --teleop.port=/dev/ttyACM0 \
-    --teleop.id=myleader01
+    --teleop.id=myleader01 \
     --display_data=true
 ```
 ### 1.3.3 本地录制
@@ -130,13 +130,13 @@ Linux  cmd.sh中以方便重复执行。<br>
 ```shell
 lerobot-record \
     --robot.disable_torque_on_disconnect=true \
-    ---robot.type=so101_follower \
+    --robot.type=so101_follower \
     --robot.port=/dev/ttyACM1 \
-    --robot.id=myfollower01
+    --robot.id=myfollower01 \
     --robot.cameras="{'wrist': {'type':'opencv', 'index_or_path':0, 'width':640, 'height':360, 'fps':30}, 'front': {'type':'opencv', 'index_or_path':2, 'width':640, 'height':360, 'fps':30}}" \
     --teleop.type=so101_leader \
     --teleop.port=/dev/ttyACM0 \
-    --teleop.id=myleader01
+    --teleop.id=myleader01 \
     --display_data=true \
     --dataset.repo_id=${HF_USER}/so101_test \
     --dataset.num_episodes=10 --dataset.episode_time_s=20 \
