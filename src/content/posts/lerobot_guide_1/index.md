@@ -71,7 +71,7 @@ lerobot-calibrate \
 
 回车保存于`~/.cache/huggingface/lerobot/calibration/robots/so101_leader/myleader01.json`
 
-### 2.3 检查
+### 2.3 检查同步
 ```shell
 lerobot-teleoperate \
     --robot.type=so101_follower \
@@ -85,6 +85,7 @@ lerobot-teleoperate \
 > 检查第2、3、6号关节在 rest 位置时，是否处于与 Leader 臂同步的状态。如差异很大，可能 Leader 臂处于 rest 位时 follower 扭矩还很大，导致舵机发热、过热。
 
 ## 3 相机配置
+### 3.1 查看相机编号
 ```shell
 lerobot-find-cameras
 ```
@@ -92,3 +93,54 @@ lerobot-find-cameras
 > 插拔或电脑重启之后序列对应关系会发生变化
 
 在`lerobot/output/captured_images`目录下，可以看到 2个获取的图像文件
+
+### 3.2 示教时显示相机画面
+```shell
+lerobot-teleoperate \
+    ---robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=myfollower01
+    --robot.cameras="{ 'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 360, 'fps': 30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=myleader01
+    --display_data=true
+```
+### 3.3 本地录制
+地录制比较简单，不用获取Hugging face 的token。<br>
+先直接设置 HF_USER 变量，可以直接设置为你的用户名。
+```shell
+export HF_USER=your_user_name
+```
+正面的命令比较长，可以写到脚本文件中：<br>
+Linux  cmd.sh中以方便重复执行。<br>
+再使用 record 命令开始录制（相比 teleoperate，多了后面 --dataset 的三个选项）
+```shell
+lerobot-record \
+    --robot.disable_torque_on_disconnect=true \
+    ---robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=myfollower01
+    --robot.cameras="{'wrist': {'type':'opencv', 'index_or_path':0, 'width':640, 'height':360, 'fps':30}, 'front': {'type':'opencv', 'index_or_path':2, 'width':640, 'height':360, 'fps':30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=myleader01
+    --display_data=true \
+    --dataset.repo_id=${HF_USER}/so101_test \
+    --dataset.num_episodes=10 --dataset.episode_time_s=20 \
+    --dataset.single_task="Grab the black cube"
+```
+只有一个摄像头时，camera参数部分为：
+```shell
+--robot.cameras="{'handeye': {'type':'opencv', 'index_or_path':0, 'width':640, 'height':360, 'fps':30}}
+```
+如果要继续上一次的录制，可以添加：` --resume=true `。训练完的 数据集存放在`./cache/huggingface/lerobot/${HF_USER}/so101_test`下面
+> [!WARNING] 警告
+> 第2次录制时，使用相同的 dataset.repo_id 参数会报 File exists 错误。要么 dataset.repo_id 换名字，要么删除原来的，要么加 “--resume=true” 继续录制到该数据集。
+
+每次动作的结束以两种方式：
+1. 计时到 episode_time_s
+2. 如果动作已完成，按键盘向右键提前结束当前轮次
+3. 按键盘向左键重录当前轮次
+4. 按ESC退出录制
+
