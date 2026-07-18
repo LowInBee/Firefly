@@ -13,6 +13,12 @@ draft: false
 基于Ubuntu24.04，
 1. python3.10，lerobot0.4
 2. python3.12，lerobot0.5
+
+参考手册：
+1. [huggingface官方](https://huggingface.co/docs/lerobot/v0.5.1/en/index)
+2. [飞书文档](https://tcnppips4y7o.feishu.cn/wiki/T4a5w7vpDi74e1kTukVcELYknVf)
+3. [真机采集数据、训练参考koch](https://huggingface.co/docs/lerobot/main/en/getting_started_real_world_robot?teleoperate_koch_camera=Command)
+
 ### 1.1.1 miniconda3创建虚拟环境
 ```shell
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -28,7 +34,7 @@ conda activate lerobot
 git clone https://github.com/JoyandAI/lerobot.git
 # 若已经有0.3版本 则输入以下更新仓库指令 
 git pull
-#下载好最新的仓库之后，切换到dev分支，0.5版本代码在这里
+#切换到dev分支，0.5版本代码在这里
 git checkout dev
 git pull origin dev
 ```
@@ -220,8 +226,8 @@ lerobot-rollout \
     --strategy.type=base \
     --policy.path=outputs/smolvla/checkpoints/100000/pretrained_model \
     --robot.type=so101_follower \
-    --robot.id=my_so101 \
-    --robot.port=/dev/ttyACM0 \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=myfollower01
     --robot.cameras='{"wrist": {"type": "opencv", "index_or_path": 0, "width": 640, "height": 360, "fps": 30}, "front": {"type": "opencv", "index_or_path": 1, "width": 640, "height": 360, "fps": 30}}' \
     --task="catch the block into the box" \
     --duration=300 \
@@ -234,8 +240,8 @@ lerobot-rollout \
 >这里仍然用的是 record.py，是推理的同时记录数据集，可能huggingface希望大家把数据集都上传到HF。但提供了 policy，确实是用指定策略模型推理
 ```shell
 lerobot-record  \
-  --robot.type=so101_follower --robot.port=/dev/ttyACM0 --robot.id=R12252801 \
-  --teleop.type=so101_leader --teleop.port=/dev/ttyACM1 --teleop.id=R07252801 \
+  --robot.type=so101_follower --robot.port=/dev/ttyACM1 --robot.id=myfollower01 \
+  --teleop.type=so101_leader --teleop.port=/dev/ttyACM0 --teleop.id=myleader01 \
   --robot.disable_torque_on_disconnect=true \
   --robot.cameras="{'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 360, 'fps': 30}, 'front': {'type': 'opencv', 'index_or_path': 1, 'width': 640, 'height': 360, 'fps': 30}}" \
   --display_data=true \
@@ -252,8 +258,8 @@ lerobot-rollout \
     --strategy.type=base \
     --policy.path=outputs/smolvla/checkpoints/100000/pretrained_model \
     --robot.type=so101_follower \
-    --robot.id=my_so101 \
-    --robot.port=/dev/ttyACM0 \
+    --robot.id=myfollower01 \
+    --robot.port=/dev/ttyACM1 \
     --robot.cameras="{'wrist': {'type': 'opencv', 'index_or_path': 0, 'width': 640, 'height': 360, 'fps': 30}, 'front': {'type': 'opencv', 'index_or_path': 1, 'width': 640, 'height': 360, 'fps': 30}}" \
     --task="catch the block into the box" \
     --inference.type=rtc \
@@ -272,7 +278,7 @@ lerobot-rollout \
     --policy.path=outputs/pretrained_model \
     --inference.type=rtc \
     --robot.type=so101_follower \
-    --robot.port=/dev/ttyACM0 \
+    --robot.port=/dev/ttyACM1 \
     --dataset.repo_id=myuser/rollout_sentry_data \
     --dataset.single_task="patrol" \
     --dataset.push_to_hub=false \
