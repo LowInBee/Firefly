@@ -1,5 +1,5 @@
 ---
-title: lerobot0.4教程
+title: lerobot0.4/0.5教程
 published: 2026-07-15
 description: 简短教程
 image: ./cover.png
@@ -43,6 +43,29 @@ cd lerobot
 pip install -e ".[feetech]"
 conda install -c conda-forge ffmpeg=7.1.1
 ```
+
+```
+pip install evdev 
+#WSL 用户额外安装
+```
+### 1.1.3 WSL+ROCM用户
+```
+pip install -e ".[all]" --no-deps
+pip check
+pip install datasets accelerate wandb diffusers transformers
+```
+或者
+找到`pyproject.toml`,删除
+```
+torch
+torchvision
+torchaudio
+```
+运行
+```
+pip install -e ".[all]"
+```
+
 
 ## 1.2 机械臂位置手动标定
 

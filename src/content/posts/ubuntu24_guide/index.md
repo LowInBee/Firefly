@@ -110,7 +110,7 @@ sudo apt install nvidia-driver-595-open -y #目前最新
 4. Enroll MOK → Continue → Yes
 5. 输入刚才设置的密码，确认重启进系统
 
-## 8修复 Wayland 显卡兼容问题（N 卡必关，避免黑屏、输入法失效）
+## 8 修复 Wayland 显卡兼容问题（N 卡必关，避免黑屏、输入法失效）
 ```shell
 sudo nano /etc/gdm3/daemon.conf
 ```
@@ -120,7 +120,7 @@ sudo systemctl restart gdm3
 ```
 注销重登，右上角齿轮选择 Ubuntu on Xorg。
 
-## 9Git、网络工具、解压工具
+## 9 Git、网络工具、解压工具
 ```shell
 sudo apt install git curl wget unzip zip tar net-tools iputils-ping tree htop -y
 ```
