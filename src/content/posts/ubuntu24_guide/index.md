@@ -1,5 +1,5 @@
 ---
-title: ubuntu24.04新系统调教
+title: ubuntu24.04新系统调教(N卡)
 published: 2026-07-15
 description: 新系统准备工作
 image: ./cover.jpg
@@ -42,6 +42,8 @@ conda activate <name>
 conda deactivate
 conda env list
 conda remove -n 环境名 --all
+conda create -n new_env --clone old_env
+
 ```
 
 ## 4 安装VScode

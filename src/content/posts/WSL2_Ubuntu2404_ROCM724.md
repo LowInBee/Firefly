@@ -1,5 +1,5 @@
 ---
-title: AMD 7900xt + WSL2 + ROCm7.2.4 配置AI开发环境
+title: win11 + AMD 7900xt + WSL2 + ROCm7.2.4 配置开发环境
 published: 2026-07-26
 description: wsl2与ROCM7.2
 
@@ -8,11 +8,11 @@ category: ubuntu
 draft: false
 ---
 
-# AMD 7800xt + WSL2 + ROCm 7.2.4 配置AI开发环境
+# AMD 7900xt + WSL2 + ROCm 7.2.4 配置AI开发环境
 
-## WSL2 + Ubuntu 24.04 + ROCm 7.2.4 + Conda AI 开发环境配置
+## WSL2 + Ubuntu 24.04 + ROCm 7.2.4 + AI 开发环境配置
 
-> **环境**：Windows 11 + WSL2 + AMD Radeon RX 7800 XT（Adrenalin 26.2.2）+ ROCm 7.2.4 + PyTorch 2.9.1
+**环境**：Windows 11 + WSL2 + AMD Radeon RX 7800 XT（Adrenalin 26.2.2）+ ROCm 7.2.4 + PyTorch 2.9.1
 
 ---
 
@@ -121,7 +121,8 @@ sudo apt install -y \
 
 ### 第4步：添加 ROCm 7.2.4 仓库
 
-> **重要**：Ubuntu 24.04 已移除 `apt-key`，必须使用 `signed-by` keyring 方式注册 GPG 密钥，否则仓库会被忽略并报签名警告。
+> [!IMPORTANT] 重要
+> Ubuntu 24.04 已移除 `apt-key`，必须使用 `signed-by` keyring 方式注册 GPG 密钥，否则仓库会被忽略并报签名警告。
 
 ```bash
 # 创建 keyring 目录（发行版推荐位置）
@@ -216,7 +217,8 @@ rocminfo | grep "Marketing Name"
 
 **预期输出**：能看到你的 AMD GPU 型号（如 `Radeon RX 7800 XT`）。
 
-> **注意**：`rocm-smi` 在 WSL2 下会报错 `Driver not initialized (amdgpu not found)`，这是**正常现象**，因为 WSL2 没有 Linux 内核 amdgpu 模块。GPU 状态请在 **Windows 主机** 上通过 Adrenalin 软件或任务管理器查看。
+> [!NOTE] 提示
+> `rocm-smi` 在 WSL2 下会报错 `Driver not initialized (amdgpu not found)`，这是**正常现象**，因为 WSL2 没有 Linux 内核 amdgpu 模块。GPU 状态请在 **Windows 主机** 上通过 Adrenalin 软件或任务管理器查看。
 
 ---
 
@@ -264,6 +266,7 @@ conda create -n myenv python=3.12 -y
 conda activate myenv
 ```
 
+> [!NOTE] 提示
 > **Python 3.12 是必需的**：AMD 官方 ROCm 7.2.4 的 PyTorch 2.9.1 wheel 仅提供 `cp312` 构建，匹配 Ubuntu 24.04 的默认 Python 版本。使用 3.10/3.11 将找不到对应 wheel。
 
 ---
@@ -349,7 +352,8 @@ pip install numpy==1.26.4 pandas matplotlib scikit-learn \
     pillow opencv-python sentencepiece protobuf
 ```
 
-> **注意**：PyTorch 2.9.1 ROCm wheel 与 numpy 2.x 不兼容，需固定为 `numpy==1.26.4`。
+> [!CAUTION] 注意
+> PyTorch 2.9.1 ROCm wheel 与 numpy 2.x 不兼容，需固定为 `numpy==1.26.4`。
 
 ---
 
@@ -375,7 +379,7 @@ wsl --import Ubuntu-24.04-Restore D:\WSL\Ubuntu-24.04-Restore D:\WSL_Backups\ubu
 ubuntu2404.exe config --default-user xlrong
 ```
 
-> `D:\WSL\Ubuntu-24.04-Restore` 是**新虚拟磁盘的存放目录**，不是工作路径，可自定义为任意有空间的目录。
+ `D:\WSL\Ubuntu-24.04-Restore` 是**新虚拟磁盘的存放目录**，不是工作路径，可自定义为任意有空间的目录。
 
 #### 快速克隆（同一台机器）
 
