@@ -25,8 +25,11 @@ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh
 source ~/.bashrc
 
-conda create -n lerobot python=3.10
-conda activate lerobot
+conda create -n lerobot04 python=3.10
+conda activate lerobot04
+#如果是0.5版本，则需要：
+conda create -n lerobot05 python=3.12
+conda activate lerobot05
 ```
 
 ### 1.1.2 克隆代码库并安装相关包与舵机驱动

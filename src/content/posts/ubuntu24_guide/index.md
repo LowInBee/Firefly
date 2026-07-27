@@ -124,3 +124,19 @@ sudo systemctl restart gdm3
 ```shell
 sudo apt install git curl wget unzip zip tar net-tools iputils-ping tree htop -y
 ```
+
+## 10WSL下proxy
+```shell
+#在 WSL Ubuntu 查看 Windows 网关地址
+ip route | grep default
+
+export http_proxy=http://172.30.176.1:7897
+export https_proxy=http://172.30.176.1:7897
+export HTTP_PROXY=http://172.30.176.1:7897
+export HTTPS_PROXY=http://172.30.176.1:7897
+
+unset http_proxy
+unset https_proxy
+unset HTTP_PROXY
+unset HTTPS_PROXY
+```
