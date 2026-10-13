@@ -1,8 +1,10 @@
 import type { SiteConfig } from "@/types/siteConfig";
+import { resolvePageToggles } from "../utils/page-toggle-utils";
+import { resolveSiteLang } from "../utils/site-config-utils";
 
 // 定义站点语言
 // 语言代码，例如：'zh_CN', 'zh_TW', 'en', 'ja', 'ru', 'ko'。
-const SITE_LANG = "zh_CN";
+const SITE_LANG = resolveSiteLang("zh_CN");
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
@@ -19,22 +21,16 @@ export const siteConfig: SiteConfig = {
 		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板。",
 
 	// 站点关键词
-	keywords: [
-		"Firefly",
-		"Astro",
-		"博客",
-	],
+	keywords: ["Firefly", "Astro", "博客"],
 
 	// 主题色
 	themeColor: {
 		// 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
 		hue: 165,
-		// 是否对访问者隐藏主题色选择器
-		fixed: false,
 		// 默认模式："light" 亮色，"dark" 暗色，"system" 跟随系统
 		defaultMode: "system",
 	},
-													
+
 	// 页面整体宽度（单位：rem）
 	// 数值越大可以让页面内容区域更宽
 	// 在使用单侧栏边栏时，建议调低一些宽度以获得更好的视觉效果。
@@ -93,7 +89,7 @@ export const siteConfig: SiteConfig = {
 	timezone: "Asia/Shanghai",
 
 	// 页面开关配置 - 控制特定页面的访问权限，设为false会返回404并自动隐藏对应的导航栏菜单项
-	pages: {
+	pages: resolvePageToggles({
 		// 友链页面开关
 		friends: false,
 		// 打赏页面开关
@@ -105,8 +101,13 @@ export const siteConfig: SiteConfig = {
 		// 相册页面开关
 		gallery: true,
 		// 追番页面开关
-		anime: false,
-	},
+		bilibili: false,
+		dynamic: false,
+		booknav: false,
+		vndb: false,
+		mal: false,
+		projects: false,
+	}),
 
 	// 分类导航栏开关，在首页和归档页顶部显示分类快捷导航
 	categoryBar: true,
@@ -120,8 +121,6 @@ export const siteConfig: SiteConfig = {
 		defaultMode: "list",
 		// 移动端默认布局模式，不设置则跟随 defaultMode
 		mobileDefaultMode: "grid",
-		// 是否允许用户切换布局
-		allowSwitch: true,
 		// 文章简介显示行数，设为 0 则不截断
 		descriptionLines: 2,
 		// 文章卡片底部统计和发布日期是否显示图标
@@ -179,7 +178,10 @@ export const siteConfig: SiteConfig = {
 		// 文章过期阈值（天数），超过此天数才显示"上次编辑"卡片
 		outdatedThreshold: 30,
 		// 是否开启分享海报生成功能
-		sharePoster: true,
+		share: true,
+		postNavigation: true,
+		relatedPosts: true,
+		randomPosts: true,
 		// OpenGraph图片功能，注意开启后要渲染很长时间，不建议本地调试的时候开启
 		generateOgImages: false,
 	},
@@ -202,20 +204,10 @@ export const siteConfig: SiteConfig = {
 		categoryOrder: ["anime", "book", "music", "game"],
 	},
 
-	// 追番配置（Bilibili + TMDB）
-	anime: {
-		// Bilibili 配置
-		bilibili: {
-			// 你的 Bilibili 用户 UID
-			uid: "38932988",
-		},
-		// TMDB 配置（可选，需要翻墙）
-		// tmdb: {
-		//   // TMDB API 密钥
-		//   apiKey: "your_tmdb_api_key",
-		//   // TMDB 列表 ID
-		//   listId: "your_list_id",
-		// },
+	// Bilibili 追番配置
+	bilibili: {
+		// 你的 Bilibili 用户 UID
+		uid: "38932988",
 	},
 
 	// 分页配置

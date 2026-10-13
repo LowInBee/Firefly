@@ -182,9 +182,9 @@ export const LinkPresets: Record<string, NavBarLink> = {
 	},
 	Anime: {
 		name: "追番",
-		url: "/anime/",
+		url: "/bilibili/",
 		icon: "material-symbols:live-tv",
-		pageKey: "anime",
+		pageKey: "bilibili",
 	},
 };
 

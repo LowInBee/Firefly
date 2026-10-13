@@ -7,9 +7,9 @@
 > 一款清新美觀的 Astro 靜態博客主題模板
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
-![pnpm >= 9](https://img.shields.io/badge/pnpm-%3E%3D9-blue)
-![Astro](https://img.shields.io/badge/Astro-7.0.7-orange)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
+![pnpm >= 11](https://img.shields.io/badge/pnpm-%3E%3D9-blue)
+![Astro](https://img.shields.io/badge/Astro-7-orange)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-blue)
 >
 > [![Stars](https://img.shields.io/github/stars/CuteLeaf/Firefly?style=social)](https://github.com/CuteLeaf/Firefly/stargazers)
 [![Forks](https://img.shields.io/github/forks/CuteLeaf/Firefly?style=social)](https://github.com/CuteLeaf/Firefly/network/members)
@@ -28,7 +28,7 @@
 
 ---
 📖 README：
-**[简体中文](../README.md)** | **[繁體中文](README.zh-TW.md)** | **[English](../README.en.md)** | **[日本語](README.ja.md)** 
+**[简体中文](../README.md)** | **[繁體中文](README.zh-TW.md)** | **[English](../README.en.md)** | **[日本語](README.ja.md)** | **[한국어](README.ko.md)**
 
 🚀 快速指南：
 [**🖥️線上預覽**](https://firefly.cuteleaf.cn/) /
@@ -51,7 +51,7 @@
     </td>
   </tr>
   <tr>
-    <td align="center"><img src="./images/3.webp" width="300"><br>透明模式</td>
+    <td align="center"><img src="./images/3.webp" width="300"><br>透明覆蓋模式</td>
     <td align="center"><img src="./images/2.webp" width="300"><br>全螢幕桌布模式</td>
     <td align="center"><img src="./images/4.webp" width="300"><br>純色模式</td>
   </tr>
@@ -66,7 +66,7 @@
 >
 >Firefly 也保留了原版 fuwari 的版面，可根據自己的喜好在配置檔案中自由切換。
 >
->**更多版面配置及示範請查看：[Firefly 版面配置系統詳解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)**
+>**更多版面配置及示範請查看：[Firefly 版面配置系統詳解](https://firefly.cuteleaf.cn/posts/guide/firefly-layout-system/)**
 >
 >Firefly 支援 i18n 多語言 UI，但除了簡體中文，其他語言均為 AI 翻譯轉換，如有錯誤，歡迎提交 [Pull Request](https://github.com/CuteLeaf/Firefly/pulls) 修正。
 
@@ -98,7 +98,7 @@
 ### 環境要求
 
 - Node.js ≥ 22
-- pnpm ≥ 9
+- pnpm ≥ 11
 
 ### 本地開發部署
 
@@ -190,7 +190,7 @@ src/
 │   ├── effectsConfig.ts          # 動畫特效配置（櫻花等）
 │   ├── expressiveCodeConfig.ts   # 程式碼高亮配置
 │   ├── fontConfig.ts             # 字型配置
-│   ├── footerConfig.ts           # 頁尾配置
+│   ├── FooterConfig.html           # 頁尾配置
 │   ├── friendsConfig.ts          # 友鏈配置
 │   ├── galleryConfig.ts          # 相簿配置
 │   ├── licenseConfig.ts          # 授權配置
@@ -235,12 +235,13 @@ pnpm new-d 今天天氣真不錯
 ---
 published: 2026-07-15 16:15:29
 pinned: true  # 置頂
+location: China # 位置
 ---
 
 動態內容支援 Markdown 語法。
 ```
 
-也支援對接 [Memos](https://www.usememos.com/) 作為資料來源，在 `src/config/dynamicConfig.ts` 中設定 `memos` 選項即可即時取得 Memos 動態，支援置頂同步和圖片附件展示。詳見[動態檔案](https://firefly.cuteleaf.cn/guide/dynamic/)。
+也支援對接 [Memos](https://www.usememos.com/) 作為資料來源，在 `src/config/dynamicConfig.ts` 中設定 `memos` 選項即可即時取得 Memos 動態，支援置頂同步和圖片附件展示。詳見[動態檔案](https://docs-firefly.cuteleaf.cn/zh/guide/dynamic.html)。
 
 ## 🧩 Markdown 擴充語法
 

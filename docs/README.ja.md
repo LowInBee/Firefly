@@ -7,9 +7,9 @@
 > 美しくモダンな Astro 静的ブログテーマテンプレート
 > 
 > ![Node.js >= 22](https://img.shields.io/badge/node.js-%3E%3D22-brightgreen) 
-![pnpm >= 9](https://img.shields.io/badge/pnpm-%3E%3D9-blue)
-![Astro](https://img.shields.io/badge/Astro-7.0.7-orange)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-blue)
+![pnpm >= 11](https://img.shields.io/badge/pnpm-%3E%3D9-blue)
+![Astro](https://img.shields.io/badge/Astro-7-orange)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-blue)
 >
 > [![Stars](https://img.shields.io/github/stars/CuteLeaf/Firefly?style=social)](https://github.com/CuteLeaf/Firefly/stargazers)
 [![Forks](https://img.shields.io/github/forks/CuteLeaf/Firefly?style=social)](https://github.com/CuteLeaf/Firefly/network/members)
@@ -28,7 +28,7 @@
 
 ---
 📖 README：
-**[简体中文](../README.md)** | **[繁體中文](README.zh-TW.md)** | **[English](../README.en.md)** | **[日本語](README.ja.md)**
+**[简体中文](../README.md)** | **[繁體中文](README.zh-TW.md)** | **[English](../README.en.md)** | **[日本語](README.ja.md)** | **[한국어](README.ko.md)**
 
 🚀 クイックガイド：
 [**🖥️ライブデモ**](https://firefly.cuteleaf.cn/) /
@@ -66,7 +66,7 @@
 >
 >Firefly はオリジナルの fuwari レイアウトも保持しており、設定ファイルで好みに応じて自由に切り替えられます。
 >
->**レイアウト設定とデモの詳細については、[Firefly レイアウトシステム詳解](https://firefly.cuteleaf.cn/posts/firefly-layout-system/)をご覧ください**
+>**レイアウト設定とデモの詳細については、[Firefly レイアウトシステム詳解](https://firefly.cuteleaf.cn/posts/guide/firefly-layout-system/)をご覧ください**
 >
 >Firefly は i18n の多言語 UI をサポートしていますが、簡体字中国語以外の言語は AI 翻訳です。誤りがある場合は、[Pull Request](https://github.com/CuteLeaf/Firefly/pulls) の提出を歓迎します。
 
@@ -98,7 +98,7 @@
 ### 環境要件
 
 - Node.js ≥ 22
-- pnpm ≥ 9
+- pnpm ≥ 11
 
 ### ローカル開発
 
@@ -187,7 +187,7 @@ src/
 │   ├── effectsConfig.ts          # アニメーションエフェクト設定（桜など）
 │   ├── expressiveCodeConfig.ts   # コードハイライト設定
 │   ├── fontConfig.ts             # フォント設定
-│   ├── footerConfig.ts           # フッター設定
+│   ├── FooterConfig.html           # フッター設定
 │   ├── friendsConfig.ts          # 友人リンク設定
 │   ├── galleryConfig.ts          # ギャラリー設定
 │   ├── licenseConfig.ts          # ライセンス設定
@@ -232,12 +232,13 @@ pnpm new-d 今日はとても良い天気です
 ---
 published: 2026-07-15 16:15:29
 pinned: true  # 記事を固定
+location: China # 場所
 ---
 
 本文では Markdown を使用できます。
 ```
 
-[Memos](https://www.usememos.com/) をデータソースとして接続することもできます。`src/config/dynamicConfig.ts` の `memos` オプションを設定すると、ピン留めの同期や画像添付ファイルの表示に対応したリアルタイムデータ取得が可能です。詳細は[モーメントドキュメント](https://firefly.cuteleaf.cn/guide/dynamic/)をご参照ください。
+[Memos](https://www.usememos.com/) をデータソースとして接続することもできます。`src/config/dynamicConfig.ts` の `memos` オプションを設定すると、ピン留めの同期や画像添付ファイルの表示に対応したリアルタイムデータ取得が可能です。詳細は[モーメントドキュメント](https://docs-firefly.cuteleaf.cn/en/guide/dynamic.html)をご参照ください。
 
 ## 🧩 Markdown拡張
 

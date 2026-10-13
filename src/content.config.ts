@@ -21,6 +21,8 @@ type PostData = {
 	comment: boolean;
 	password: string;
 	passwordHint: string;
+	series: string;
+	seriesOrder?: number;
 	prevTitle: string;
 	prevSlug: string;
 	nextTitle: string;
@@ -30,6 +32,26 @@ type PostData = {
 type DynamicData = {
 	published: Date;
 	pinned: boolean;
+	location: string;
+};
+
+type ProjectLink = {
+	label: string;
+	icon: string;
+	value: string;
+};
+
+type ProjectData = {
+	title: string;
+	published: Date;
+	draft: boolean;
+	order?: number;
+	description: string;
+	image: string;
+	tags: string[];
+	link: ProjectLink[];
+	status: string;
+	lang: string;
 };
 
 type ContentCollection<T> = CollectionConfig<
@@ -57,6 +79,8 @@ const postsCollection: ContentCollection<PostData> = defineCollection({
 		comment: z.boolean().optional().default(true),
 		password: z.string().optional().default(""),
 		passwordHint: z.string().optional().default(""),
+		series: z.string().optional().default(""),
+		seriesOrder: z.number().optional(),
 
 		/* For internal use */
 		prevTitle: z.string().default(""),
@@ -77,6 +101,32 @@ const dynamicCollection: ContentCollection<DynamicData> = defineCollection({
 	schema: z.object({
 		published: z.date(),
 		pinned: z.boolean().optional().default(false),
+		location: z.string().optional().default(""),
+	}),
+});
+
+const projectsCollection: ContentCollection<ProjectData> = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
+	schema: z.object({
+		title: z.string(),
+		published: z.date(),
+		draft: z.boolean().optional().default(false),
+		order: z.number().optional(),
+		description: z.string().optional().default(""),
+		image: z.string().optional().default(""),
+		tags: z.array(z.string()).optional().default([]),
+		link: z
+			.array(
+				z.object({
+					label: z.string(),
+					icon: z.string().optional().default(""),
+					value: z.string(),
+				}),
+			)
+			.optional()
+			.default([]),
+		status: z.string().optional().default(""),
+		lang: z.string().optional().default(""),
 	}),
 });
 
@@ -84,8 +134,10 @@ export const collections: {
 	dynamic: typeof dynamicCollection;
 	posts: typeof postsCollection;
 	spec: typeof specCollection;
+	projects: typeof projectsCollection;
 } = {
 	dynamic: dynamicCollection,
 	posts: postsCollection,
 	spec: specCollection,
+	projects: projectsCollection,
 };
